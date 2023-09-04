@@ -1,5 +1,5 @@
 #!python
-# cython: language_level=3, c_string_type=unicode, c_string_encoding=utf8
+# cython: language_level=3
 
 import ffmpeg
 import numpy as np
@@ -17,9 +17,6 @@ cdef int SAMPLE_RATE = 16000
 cdef char* TEST_FILE = 'test.wav'
 cdef char* DEFAULT_MODEL = 'tiny'
 cdef char* LANGUAGE = b'zh'
-cdef unicode CHINESE_PROMPT = u"""以下是普通话的句子。"""
-cdef bytes ENCODE_PROMPT = CHINESE_PROMPT.encode('utf8')
-cdef char* PROMPT = ENCODE_PROMPT 
 cdef int N_THREADS = os.cpu_count()
 
 MODELS = {
@@ -79,7 +76,6 @@ cdef whisper_full_params default_params() nogil:
     params.print_progress = True
     params.translate = False
     params.language = <const char *> LANGUAGE
-    params.initial_prompt = <const char *> PROMPT
     n_threads = N_THREADS
     return params
 
